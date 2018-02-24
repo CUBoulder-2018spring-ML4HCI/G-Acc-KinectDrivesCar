@@ -183,7 +183,8 @@ void sendOSC(const NUI_SKELETON_DATA & skel) {
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 
 	bool doTest = false;
-	bool rightHandOnly = true;
+	bool rightHandOnly = false;
+	bool rightLeftXYZ = false;
 
 	if (doTest) {
 		float val1 = 3.0;
@@ -206,11 +207,9 @@ void sendOSC(const NUI_SKELETON_DATA & skel) {
 		p << osc::BeginBundleImmediate
 			<< osc::BeginMessage("/wek/inputs")
 			<< val4 << val5 << osc::EndMessage
-			//<< osc::BeginMessage("/wek/inputs")
-			//<< (double)0.23 << osc::EndMessage
 			<< osc::EndBundle;
 	}
-	else {
+	else if (rightLeftXYZ){
 		float val1 = skel.SkeletonPositions[NUI_SKELETON_POSITION_WRIST_LEFT].x * 100;
 		float val2 = skel.SkeletonPositions[NUI_SKELETON_POSITION_WRIST_LEFT].y * 100;
 		float val3 = skel.SkeletonPositions[NUI_SKELETON_POSITION_WRIST_LEFT].z * 100;
@@ -221,8 +220,25 @@ void sendOSC(const NUI_SKELETON_DATA & skel) {
 		p << osc::BeginBundleImmediate
 			<< osc::BeginMessage("/wek/inputs")
 			<< val1 << val2 << val3 << val4 << val5 << val6 << osc::EndMessage
-			//<< osc::BeginMessage("/wek/inputs")
-			//<< (double)0.23 << osc::EndMessage
+			<< osc::EndBundle;
+	}
+	else {
+		//xyz distances from right hand to head
+		float headx = skel.SkeletonPositions[NUI_SKELETON_POSITION_HEAD].x * 100;
+		float heady = skel.SkeletonPositions[NUI_SKELETON_POSITION_HEAD].y * 100;
+		float headz = skel.SkeletonPositions[NUI_SKELETON_POSITION_HEAD].z * 100;
+
+		float handx = skel.SkeletonPositions[NUI_SKELETON_POSITION_WRIST_RIGHT].x * 100;
+		float handy = skel.SkeletonPositions[NUI_SKELETON_POSITION_WRIST_RIGHT].y * 100;
+		float handz = skel.SkeletonPositions[NUI_SKELETON_POSITION_WRIST_RIGHT].z * 100;
+
+		float distx = handx - headx;
+		float disty = handy - heady;
+		float distz = handz - headz;
+
+		p << osc::BeginBundleImmediate
+			<< osc::BeginMessage("/wek/inputs")
+			<< distx << disty << distz << osc::EndMessage
 			<< osc::EndBundle;
 	}
 
