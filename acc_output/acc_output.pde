@@ -60,17 +60,28 @@ void draw()
 //Uncomment This and mimic the keyPressed() function above to work with OSC
 //This is called automatically when OSC message is received
 void oscEvent(OscMessage theOscMessage) {
+  print("Messagae recieved." + theOscMessage.get(0).floatValue());
  if (theOscMessage.checkAddrPattern("/wek/outputs")==true) {
         float move = theOscMessage.get(0).floatValue();//get this parameter
+        
         move = (int)move;
+        
         if (move == 1){
-           yDir = 1; 
+          if (yspeed < 10) yspeed++;
         }else if(move == 2){
-          yDir = -1; 
+          if (yspeed > 0) yspeed--;
         }else if(move == 3){
-           xDir = -1; 
-        }else{
-          xDir = 1;
+           if (xPos>width-20 || xPos<20) xDir = 0; 
+           else xDir = -1;
+        }else if (move == 4){
+           if (xPos>width-20 || xPos<20) xDir = 0; 
+           else xDir = 1;
+        }
+        else if (move == 5) {
+          yspeed = 0;
+        }
+        else {
+          print("Error. Unhandled class.");
         }
  }
 }
