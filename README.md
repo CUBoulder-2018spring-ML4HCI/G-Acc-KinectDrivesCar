@@ -64,4 +64,5 @@ Ultimately, we hope that technology similar to this could help people with lower
 ## A link to a demo video
 
 [Intro and Initial Test](https://youtu.be/Tqz7L4BBuaE)
+
 [Final working version](https://youtu.be/ppuT78cEfls)
