@@ -32,14 +32,14 @@ Wekinator
 
 Processing
 
-#TO DO BELOW
+# TO DO BELOW
 
 ## Approach
 
-###Sensors used
-###Feature extractor approach
-###ML model structure - what you did and why, including results from experiments you tried along the way
+### Sensors used
+### Feature extractor approach
+### ML model structure - what you did and why, including results from experiments you tried along the way
 
-##Ideas about how other might improve upon your work
+## Ideas about how other might improve upon your work
 
-##A link to a demo video
+## A link to a demo video
